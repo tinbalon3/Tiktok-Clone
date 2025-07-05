@@ -10,7 +10,8 @@ const nextConfig: NextConfig = {
     if (!isServer) 
       config.externals.push('canvas')
     return config;
-}
+},
+
 }
 
 export default nextConfig;
