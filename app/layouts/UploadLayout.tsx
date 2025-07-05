@@ -8,8 +8,8 @@ export default function UploadLayout({children}: {children: React.ReactNode}) {
       <>
      <div className="bg-[#F8F8F8] h-[100vh]">
       <TopNav/>
-        <div className="flex justify-between mx-auto w-full px-2 max-w-[1140px]">
-          <SideNavMain/>
+        <div className="flex justify-between mx-auto w-full lg:px-2.5 px-0  max-w-[1140px]">
+        
           {children}
         </div>
      </div>

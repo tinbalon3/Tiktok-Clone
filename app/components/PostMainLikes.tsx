@@ -29,7 +29,7 @@ export default function PostMainLikes({ post }: PostMainLikesTCompTypes) {
                              (<AiFillHeart color={likes?.length > 0 && userLiked ? '#ff2626' : ''} size="25"/>) : 
                              (<BiLoaderCircle className='animate-spin' size="25" />)}
                         </button>
-                        <span className='text-xs test-gray-800 font-semibold'>
+                        <span className='text-xs text-gray-800 font-semibold'>
                             {likes.length}
                         </span>
                     </div>

@@ -29,6 +29,10 @@ export interface PostWithProfile {
         image: string;
     };
 }
+export interface UploadError {
+    message: string;
+    type: string;
+}
 //Layout include types
 export interface MenuItemsTypes {
     iconString: string;

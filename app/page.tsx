@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <MainLayout>
-        <div className="mt-[80px] w-[calc(100% - 90px)] max-w-[690px] ml-auto">
+        <div className="mt-[80px] w-[calc(100% - 90px)] max-w-[690px] ml-[40%]">
           <ClientOnly>
             <PostMain
               post={{
@@ -30,11 +30,7 @@ export default function Home() {
           </ClientOnly>
         </div>
       </MainLayout>
-      {/* <UploadLayout>
-      <div className="color-red-500 text-3xl font-bold">
-        Upload
-      </div>
-      </UploadLayout> */}
+
     </>
   );
 }

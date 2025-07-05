@@ -15,25 +15,29 @@ export default function PostMain({ post }: PostMainTCompTypes) {
             }, { threshold: [0.6] })
             observer.observe(postMainElement);
         }
-       
-    },[]);
+
+    }, []);
     return (
         <>
-            <div id={`PostMain-${post?.id}`} className="flex border-b py-6">
-                <div className='cursor-pointer'>
-                    <img src={post?.profile?.image} width="60" className='rounded-full max-h-[60px]'/>
+            <div id={`PostMain-${post.id}`} className="flex border-b py-6">
+                {/* Avatar bên trái */}
+                <div className="mr-3">
+                    <img className="rounded-full max-h-[60px]" width="60" src={post?.profile?.image} />
                 </div>
-                <div className='pl-3 w-full px-4'>
-                    <div className='flex items-center justify-between pb-0.5'>
-                        <Link href={`/profile/${post?.profile?.user_id}`}>
-                        {post?.profile?.name }
+                {/* Nội dung chính */}
+                <div className="w-full px-4">
+                    {/* Tên user + nút follow */}
+                    <div className="flex items-center justify-between pb-0.5">
+                        <Link href={`/profile/${post.profile.user_id}`}>
+                            <span className="font-bold hover:underline cursor-pointer">
+                                {post.profile.name}
+                            </span>
                         </Link>
-
-                        <button className='border text-[15px] px-[21px] py-0.5 border-[#F02C56] text-[#F02C56] hover:bg-[#ffeef2] font-semibold rounded-md'>
+                        <button className="border text-[15px] px-[21px] py-0.5 border-[#F02C56] text-[#F02C56] hover:bg-[#ffeef2] font-semibold rounded-md">
                             Follow
                         </button>
                     </div>
-
+                    {/* Caption, hashtag, nhạc */}
                     <p className='text-[15px] pb-0.5 break-words md:max-w-[400px] max-w-[300px]'>{post.text}</p>
                     <p className='text-[14px] text-gray-500 pb-0.5'>#fun #cool #SuperAwrsome</p>
                     <p className='text-[14px] pb-0.5 flex items-center font-semibold'>
@@ -41,7 +45,8 @@ export default function PostMain({ post }: PostMainTCompTypes) {
                         <span className='px-1'>original sound - AWESOME</span>
                         <AiFillHeart/>
                     </p>
-                    <div className='flex mt-2.5'>
+                    {/* Video + icon */}
+                    <div className="flex mt-2.5">
                         <div className="relative min-h-[480px] max-h-[580px] max-w-[260px] flex items-center bg-black rounded-xl cursor-pointer">
                             <video
                                 id={`video-${post?.id}`}
@@ -57,8 +62,7 @@ export default function PostMain({ post }: PostMainTCompTypes) {
                                 src="images/tiktok-logo-white.png"
                             />
                         </div>
-
-                        <PostMainLikes post={post}/>
+                        <PostMainLikes post={post} />
                     </div>
                 </div>
             </div>
