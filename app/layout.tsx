@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+
 import "./globals.css";
-
-
+import StagewiseWrapper from "./components/tools/StagewiseWrapper";
 
 export const metadata: Metadata = {
   title: "Tiktok Clone",
@@ -16,9 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-      >
+      <body>
         {children}
+        <StagewiseWrapper />
       </body>
     </html>
   );

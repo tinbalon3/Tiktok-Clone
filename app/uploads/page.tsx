@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { UploadError } from "../types";
 import UploadLayout from "../layouts/UploadLayout";
 import { BiLoaderCircle, BiSolidCloudUpload } from "react-icons/bi";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { PiKnifeLight } from "react-icons/pi";
 
 export default function Upload() {
     const router = useRouter();
@@ -29,8 +31,26 @@ export default function Upload() {
             const fileUrl = URL.createObjectURL(file);
             setFile(file);
             setFileDisplay(fileUrl);
+          
+         
         }
     }
+    const clearVideo = () => {
+        setFile(null);
+        setFileDisplay('');
+    }
+
+    const discard = () => {
+        setFile(null);
+        setFileDisplay('');
+        setCaption('');
+      
+    }
+
+    const createNewPost = () => {
+        console.log('createNewPost');
+    }
+
     return (
         <>
             <UploadLayout>
@@ -99,7 +119,7 @@ export default function Upload() {
                             justify-center
                             "
                             >
-                                {!isUploading ? (
+                                {isUploading ? (
                                     <div
                                         className="absolute flex items-center justify-center z-20 bg-black h-full w-full rounded-[50px] bg-opacity-50">
                                         <div className="mx-auto flex items-center justify-center gap-1">
@@ -110,13 +130,72 @@ export default function Upload() {
                                 ) : null}
                                 <img className="absolute z-20 pointer-events-none" src="/images/mobile-case.png" />
                                 <img className="absolute right-4 bottom-6 z-20 " width="90" src="/images/tiktok-logo-white.png" alt="" />
-                                <video autoPlay loop muted src={fileDisplay}
-
-
+                                <video autoPlay controls loop muted src={fileDisplay}
                                     className="absolute rounded-xl object-cover z-10 p-[13px] w-full h-full"
                                 />
+
+                                <div className="absolute -bottom-12 flex items-center justify-between z-50 rounded-xl border w-full p-2 border-gray-300">
+                                    <div className="flex items-center truncate">
+                                        <AiOutlineCheckCircle size="16" className="min-w-[16px]" />
+                                        <p className="text-[11px] pl-1 truncate text-ellipsis">
+                                            {file ? file?.name : ''}
+                                        </p>
+                                    </div>
+                                    <button onClick={() => clearVideo()} className="hover:underline cursor-pointer text-[11px] ml-2 font-semibold">
+                                        Change
+                                    </button>
+                                </div>
                             </div>
                         )}
+                        <div className="mt-4 mb-6">
+                            <div className="flex bg-[#F8F8F8] py-4 px-6" >
+                                <div>
+                                    <PiKnifeLight size="25" className="mr-4" />
+                                </div>
+                                <div>
+                                    <div className="text-semibold text-[15px] mb-1.5">
+                                        Divide videos and edit
+                                    </div>
+                                    <div className="text-semibold text-[13px] text-gray-400">
+                                        You can quickly divide your video into multiple parts,
+                                        remove reduntant parts and turn landscape videos into portrait videos.
+                                    </div>
+                                </div>
+                                <div className="flex justify-end max-w-[130px] w-full h-full text-center my-auto">
+                                    <button className="px-8 py-1.5 text-white text-[15px] bg-[#F02C56] rounded-sm">
+                                        Edit
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="mt-5">
+                                <div className="flex items-center justify-between">
+                                    <div className="mb-1 text-[15px]">Caption</div>
+                                    <div className="text-gray-400 text-[12px]">{caption.length}/150</div>
+
+                                </div>
+                                <input type="text" maxLength={150} className="w-full border p-2.5 rounded-md focus:outline-none" 
+                                value={caption} onChange={event=> setCaption(event.target.value)}/>
+                            </div>
+                            <div className="flex gap-3">
+                                <button disabled={isUploading}
+                                className="px-10 py-2.5 mt-8 border text-[16px] hover:bg-gray-100 rounded-md"
+                                onClick={()=> discard()}>
+                                    Discard
+                                </button>
+                                <button disabled={isUploading}
+                                className="px-10 py-2.5 mt-8 border text-[16px]  text-white bg-[#F02C56] rounded-md"
+                                onClick={()=> createNewPost()}>
+                                    {isUploading ? <BiLoaderCircle 
+                                    size={25}
+                                    className="animate-spin" color="#ffffff"/> : 'Post'}
+                                </button>
+                            </div>
+                            {error? (
+                                <div className="mt-4 text-red-500">
+                                    {error.message}
+                                </div>
+                            ) : null}
+                        </div>
                     </div>
                 </div>
 

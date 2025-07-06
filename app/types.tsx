@@ -9,7 +9,13 @@ export interface Like {
     user_id: string;
     post_id: string;
 }
-
+export interface Post {
+    id: string;
+    user_id: string;
+    video_url: string;
+    text: string;
+    created_at: string;
+}
 export interface Comment {
     id: string;
     user_id: string;
@@ -29,6 +35,13 @@ export interface PostWithProfile {
         image: string;
     };
 }
+export interface PostUserTCompTypes {
+    post: Post
+}
+export interface ProfilePageTypes {
+    params: {id:string}
+}    
+
 export interface UploadError {
     message: string;
     type: string;

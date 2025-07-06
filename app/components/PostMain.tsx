@@ -19,7 +19,7 @@ export default function PostMain({ post }: PostMainTCompTypes) {
     }, []);
     return (
         <>
-            <div id={`PostMain-${post.id}`} className="flex border-b py-6">
+            <div id={`PostMain-${post.id}`} className="flex border-b border-gray-200 py-6">
                 {/* Avatar bên trái */}
                 <div className="mr-3">
                     <img className="rounded-full max-h-[60px]" width="60" src={post?.profile?.image} />
