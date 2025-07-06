@@ -77,3 +77,19 @@ export interface PostMainTCompTypes {
 export interface PostMainLikesTCompTypes {
     post: PostWithProfile
 }
+
+
+export interface TextInputCompTypes {
+    string: string;
+    inputType: string;
+    placeholder: string;
+    error: string;
+    onUpdate: (newValue: string) => void;
+}
+
+export interface PostPageTypes {
+    params: Promise<{
+        postId: string;
+        userId: string;
+    }>
+}
