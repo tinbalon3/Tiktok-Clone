@@ -4,6 +4,17 @@ export interface RandowUsers {
     image: string;
 }
 
+export interface ShowErrorObject {
+    message: string;
+    type: string;
+}
+export interface CropperDimensions {
+    left?: number | null;
+    top?: number | null;
+    width?: number | null;
+    height?: number | null;
+   
+}
 export interface Like {
     id: string;
     user_id: string;
