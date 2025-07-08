@@ -23,7 +23,7 @@ export default function Home() {
                   user_id: '1',
                   name: 'John Weeks Dev',
                   image: 'https://tse3.mm.bing.net/th/id/OIP.J8d82ByQ3JYt-EuiR0tIzwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3'
-                },
+                }
               }}
             />
 

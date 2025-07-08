@@ -52,7 +52,18 @@ export interface PostUserTCompTypes {
 export interface ProfilePageTypes {
     params: {id:string}
 }    
-
+export interface CommentWithProfile {
+    id: string;
+    user_id: string;
+    post_id: string;
+    text: string;
+    created_at: string;
+    profile: {
+        user_id: string;
+        name: string;
+        image: string;
+    };
+}
 export interface UploadError {
     message: string;
     type: string;
@@ -78,6 +89,19 @@ export interface PostMainLikesTCompTypes {
     post: PostWithProfile
 }
 
+export interface CommentsTypes {
+    params: Promise<{
+        postId: string;
+        userId: string;
+    }>
+}
+export interface SingleCommentTypes {
+    comment: CommentWithProfile,
+    params: Promise<{
+        postId: string;
+        userId: string;
+    }>
+}
 
 export interface TextInputCompTypes {
     string: string;
@@ -88,6 +112,14 @@ export interface TextInputCompTypes {
 }
 
 export interface PostPageTypes {
+    params: Promise<{
+        postId: string;
+        userId: string;
+    }>
+}
+
+export interface CommentsHeaderTypes {
+    post: PostWithProfile;
     params: Promise<{
         postId: string;
         userId: string;

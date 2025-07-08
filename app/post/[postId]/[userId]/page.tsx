@@ -1,6 +1,8 @@
 'use client'
 
 import ClientOnly from "@/app/components/ClientOnly";
+import Comments from "@/app/components/post/Comments";
+import CommentsHeader from "@/app/components/post/CommentsHeader";
 import { PostPageTypes } from "@/app/types"
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -16,6 +18,18 @@ export default function Post({ params }: PostPageTypes) {
     }
     const loopThroughPostsDown = () => {
         console.log('loopThroughPostsDown');
+    }
+    const postById = {
+        id: '1',
+        user_id: '1',
+        video_url: '/video_demo.mp4',
+        text: 'This is a sample video post',
+        created_at: '2023-10-01T12:00:00Z',
+        profile: {
+          user_id: '1',
+          name: 'John Weeks Dev',
+          image: 'https://tse3.mm.bing.net/th/id/OIP.J8d82ByQ3JYt-EuiR0tIzwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3'
+        }
     }
     return (
         <>
@@ -49,7 +63,7 @@ export default function Post({ params }: PostPageTypes) {
 
                     />
                     <ClientOnly>
-                        {true ? (
+                        {postById ? (
                             <video
                                 className="fixed object-cover w-full my-auto z-[0] h-screen"
                                 src="/video_demo.mp4"
@@ -72,8 +86,18 @@ export default function Post({ params }: PostPageTypes) {
                         </div>
                     </ClientOnly>
                 </div>
+                <div id="InfoSection" className="lg:max-w-[550px] relative w-full h-full bg-white">
+                            <div className="py-7">
+                                <ClientOnly>
+                                    {postById?.video_url ? (
+                                        <CommentsHeader post={postById} params={params}/>
+                                    ):null}
+                                </ClientOnly>
+                                <Comments params={params} />
+                            </div>
+                    </div>
                 </div>
-
+                
             </>
             )
 }
