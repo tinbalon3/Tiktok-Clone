@@ -1,4 +1,5 @@
 'use client'
+import useCreateBucketUrl from '@/app/hooks/useCreateBucketUrl'
 import { MenuItemFollowCompTypes } from '@/app/types'
 import Link from 'next/link'
 import React from 'react'
@@ -13,7 +14,7 @@ export default function MenuItemFollow({
         <>
             <Link href={`/profile/${user.id}`} 
             className='flex items-center hover:bg-gray-100 py-1.5 px-2 w-full rounded-md'>
-                <img className="rounded-full lg:mx-0 mx-auto" width="35" src={user?.image}/>
+                <img className="rounded-full lg:mx-0 mx-auto" width="35" src={useCreateBucketUrl(user?.image)}/>
                 <div className='lg:pl-2.5 lg:block hidden'>
                     <div className='flex items-center'>
                         <p className="font-bold text-[14px] truncate">

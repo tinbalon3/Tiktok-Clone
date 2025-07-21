@@ -1,15 +1,18 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { UploadError } from "../types";
 import UploadLayout from "../layouts/UploadLayout";
 import { BiLoaderCircle, BiSolidCloudUpload } from "react-icons/bi";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { PiKnifeLight } from "react-icons/pi";
+import { useUser } from "../context/user";
+import useCreatePost from "../hooks/useCreatePost";
 
 export default function Upload() {
     const router = useRouter();
+    const contextUser = useUser();
 
     let [fileDisplay, setFileDisplay] = useState<string>('');
     let [caption, setCaption] = useState<string>('');
@@ -18,10 +21,10 @@ export default function Upload() {
     let [isUploading, setIsUploading] = useState<boolean>(false);
 
     useEffect(() => {
-
-        router.push('/uploads');
-
-    }, [router]);
+        if(!contextUser?.user){
+            router.push('/');
+        }
+    }, [contextUser]);
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
@@ -46,10 +49,46 @@ export default function Upload() {
         setCaption('');
       
     }
+    const validate = () => {
+        setError(null);
+        let isError = false;
 
-    const createNewPost = () => {
-        console.log('createNewPost');
+        if(!file){
+            setError({message: 'Please select a video to upload', type: 'file'});
+            isError = true;
+        }
+        if(!caption){
+            setError({message: 'Please add a caption', type: 'caption'});
+            isError = true;
+        }
+        
+        return isError;
     }
+
+    const createNewPost = async () => {
+        let isError = validate();
+        if(isError){
+            return;
+        }
+        if(!file || !contextUser?.user){
+            return;
+        }
+        try {
+            setIsUploading(true);
+            await useCreatePost(file, contextUser?.user?.id, caption);
+            router.push(`/profile/${contextUser?.user?.id}`);
+            setIsUploading(false);
+        }
+        catch(error){
+            console.log(error);
+            setIsUploading(false);
+            alert(error)
+        }
+        finally{
+            setIsUploading(false);
+        }
+    }
+
 
     return (
         <>
@@ -202,4 +241,5 @@ export default function Upload() {
             </UploadLayout>
         </>
     )
+    
 }

@@ -8,36 +8,40 @@ import { useState } from "react";
 import ClientOnly from "../ClientOnly";
 import SingleComment from "./SingleComment";
 import { BiLoaderCircle } from "react-icons/bi";
+import { useCommentStore } from "@/app/store/comment";
+import { useGeneralStore } from "@/app/store/general";
+import { useUser } from "@/app/context/user";
+import useCreateComment from "@/app/hooks/useCreateComment";
 
 
-export default function CommentsHeader({ params }: CommentsTypes) {
+export default function Comments({ params }: CommentsTypes) {
+
+    const { commentsByPost, setCommentsByPost } = useCommentStore();
+    const {setIsLoginOpen} = useGeneralStore();
+
     const [comment, setComment] = useState<string>('');
     const [inputFocused, setInputFocused] = useState<boolean>(false);
     const [isUploading, setIsUploading] = useState<boolean>(false);
 
-    const addComment = () => {
+    const contextUser = useUser();
+    const addComment = async () => {
+       if(!contextUser?.user) return setIsLoginOpen(true);
+       try {
         setIsUploading(true);
-        setTimeout(() => {
-            setIsUploading(false);
-        }, 2000);
+        await useCreateComment(contextUser?.user?.id, params?.postId, comment);
+        setCommentsByPost(params?.postId);
+        setComment('');
+       }
+       catch(error){
+        console.log(error);
+       }
+       finally{
+        setIsUploading(false);
+       }
     }
 
 
-    const commentsByPost = [
-        {
-            id: '123',
-            user_id: '134',
-            post_id: '432',
-            text: 'This is a sample video post',
-            created_at: '2023-10-01T12:00:00Z',
-            profile: {
-                user_id: '1',
-                name: 'John Weeks Dev',
-                image: 'https://tse3.mm.bing.net/th/id/OIP.J8d82ByQ3JYt-EuiR0tIzwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3'
-            }
-        }
-        
-    ]
+    
 
     return (
         <>

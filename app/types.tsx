@@ -1,4 +1,20 @@
-export interface RandowUsers {
+
+export interface UserContextTypes {
+    user: User | null;
+    register(name: string, email: string, password: string): Promise<void>;
+    login(email: string, password: string): Promise<void>;
+    logout(): Promise<void>;
+    checkUser(): Promise<void>;
+}
+
+export interface User {
+    id: string;
+    name: string;
+    bio: string;
+    image: string;
+}
+
+export interface RandomUsers {
     id: string;
     name: string;
     image: string;
@@ -13,7 +29,15 @@ export interface CropperDimensions {
     top?: number | null;
     width?: number | null;
     height?: number | null;
-   
+
+}
+
+export interface Profile {
+    id: string;
+    user_id: string;
+    name: string;
+    bio: string;
+    image: string;
 }
 export interface Like {
     id: string;
@@ -50,8 +74,8 @@ export interface PostUserTCompTypes {
     post: Post
 }
 export interface ProfilePageTypes {
-    params: {id:string}
-}    
+    params: Promise<{ id: string }>
+}
 export interface CommentWithProfile {
     id: string;
     user_id: string;
@@ -77,7 +101,7 @@ export interface MenuItemsTypes {
 
 
 export interface MenuItemFollowCompTypes {
-    user: RandowUsers
+    user: RandomUsers
 }
 
 //Component types
@@ -90,17 +114,19 @@ export interface PostMainLikesTCompTypes {
 }
 
 export interface CommentsTypes {
-    params: Promise<{
+    params: {
         postId: string;
         userId: string;
-    }>
+    }
+
 }
 export interface SingleCommentTypes {
     comment: CommentWithProfile,
-    params: Promise<{
+    params: {
         postId: string;
         userId: string;
-    }>
+    }
+
 }
 
 export interface TextInputCompTypes {
@@ -120,8 +146,8 @@ export interface PostPageTypes {
 
 export interface CommentsHeaderTypes {
     post: PostWithProfile;
-    params: Promise<{
+    params: {
         postId: string;
         userId: string;
-    }>
+    }
 }

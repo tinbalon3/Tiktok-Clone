@@ -3,34 +3,50 @@
 import ClientOnly from "@/app/components/ClientOnly";
 import Comments from "@/app/components/post/Comments";
 import CommentsHeader from "@/app/components/post/CommentsHeader";
+import { useUser } from "@/app/context/user";
+import useCreateBucketUrl from "@/app/hooks/useCreateBucketUrl";
+import { useCommentStore } from "@/app/store/comment";
+import { useLikeStore } from "@/app/store/like";
+import { usePostStore } from "@/app/store/post";
 import { PostPageTypes } from "@/app/types"
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { use } from "react";
+import { use, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
 export default function Post({ params }: PostPageTypes) {
     const router = useRouter();
+    const {postById, postsByUser, setPostById,setPostsByUser,allPosts} = usePostStore();
+    let {setLikesByPost} = useLikeStore();
+    let {setCommentsByPost} = useCommentStore();
+
+    useEffect(() => {
+        setPostById(unwrappedParams.postId);
+        setPostsByUser(unwrappedParams.userId);
+        setLikesByPost(unwrappedParams.postId);
+        setCommentsByPost(unwrappedParams.postId);
+    }, []);
+
+
+  
     const unwrappedParams = use(params);
+
     const loopThroughPostsUp = () => {
-        console.log('loopThroughPostsUp');
+        postsByUser.forEach((post, index) => {
+            if(post.id > unwrappedParams.postId){
+                router.push(`/post/${post.id}/${unwrappedParams.userId}`);
+            }
+        });
     }
     const loopThroughPostsDown = () => {
-        console.log('loopThroughPostsDown');
+        postsByUser.forEach((post, index) => {
+            if(post.id < unwrappedParams.postId){
+                router.push(`/post/${post.id}/${unwrappedParams.userId}`);
+            }
+        });
     }
-    const postById = {
-        id: '1',
-        user_id: '1',
-        video_url: '/video_demo.mp4',
-        text: 'This is a sample video post',
-        created_at: '2023-10-01T12:00:00Z',
-        profile: {
-          user_id: '1',
-          name: 'John Weeks Dev',
-          image: 'https://tse3.mm.bing.net/th/id/OIP.J8d82ByQ3JYt-EuiR0tIzwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3'
-        }
-    }
+   
     return (
         <>
             <div
@@ -63,24 +79,22 @@ export default function Post({ params }: PostPageTypes) {
 
                     />
                     <ClientOnly>
-                        {postById ? (
+                        {postById?.video_url ? (
                             <video
+                               
                                 className="fixed object-cover w-full my-auto z-[0] h-screen"
-                                src="/video_demo.mp4"
-
+                                src={useCreateBucketUrl(postById?.video_url)}
                             />
-                        ) :
-                            // You can add a fallback here if needed
-                            null
-                        }
+                        ) : null}
+                       
                         <div className="bg-black/50 bg-opacity-70 lg:min-w-[480px] z-10 relative">
-                            {true ? (
-                                <video src="/video_demo.mp4"
+                            {postById?.video_url ? (
+                                <video src={useCreateBucketUrl(postById?.video_url)}
                                     autoPlay
                                     loop
                                     muted
                                     controls
-                                    className="h-screen mx-auto"
+                                    className="h-screen mx-auto "
                                 />
                             ) : null}
                         </div>
@@ -88,12 +102,12 @@ export default function Post({ params }: PostPageTypes) {
                 </div>
                 <div id="InfoSection" className="lg:max-w-[550px] relative w-full h-full bg-white">
                             <div className="py-7">
-                                <ClientOnly>
-                                    {postById?.video_url ? (
-                                        <CommentsHeader post={postById} params={params}/>
-                                    ):null}
-                                </ClientOnly>
-                                <Comments params={params} />
+                            <ClientOnly>
+                            {postById ? (
+                                <CommentsHeader post={postById} params={unwrappedParams}/>
+                            ) : null}
+                        </ClientOnly>
+                        <Comments params={unwrappedParams}/>
                             </div>
                     </div>
                 </div>

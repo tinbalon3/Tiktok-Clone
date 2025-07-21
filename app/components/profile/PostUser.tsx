@@ -6,11 +6,13 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Link from 'next/link';
 import { SiSoundcharts } from 'react-icons/si';
 import { BiErrorCircle } from 'react-icons/bi';
+import useCreateBucketUrl from '@/app/hooks/useCreateBucketUrl';
 
 export default function PostUser({ post }: PostUserTCompTypes) {
     useEffect(() => {
+        console.log(post);
         const video = document.getElementById(`video${post?.id}`) as HTMLVideoElement;
-        console.log(video);
+     
         setTimeout(() => {
             video.addEventListener('mouseenter', () => {
                 video.play();
@@ -30,7 +32,7 @@ export default function PostUser({ post }: PostUserTCompTypes) {
             </div>
            ) : (
             <Link href={`/post/${post.id}/${post.user_id}`}>
-                <video id={`video${post.id}`} muted loop className='aspect-[3/4] object-cover rounded-md' src={post.video_url}/>
+                <video id={`video${post.id}`} muted loop className='aspect-[3/4] object-cover rounded-md' src={useCreateBucketUrl(post.video_url)}/>
             </Link>
            )}
            <div className='px-1'>
