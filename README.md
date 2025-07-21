@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TikTok Clone với Next.js
 
-## Getting Started
+Dự án này là một bản sao (clone) cơ bản của TikTok, xây dựng bằng [Next.js](https://nextjs.org), sử dụng Appwrite làm backend lưu trữ dữ liệu, video và xác thực người dùng.
 
-First, run the development server:
+## Tính năng nổi bật
+- Đăng nhập/Đăng ký tài khoản
+- Xem danh sách video dạng feed (For You, Following)
+- Xem chi tiết video, tự động phát/tạm dừng khi cuộn
+- Like, bình luận video
+- Đăng video mới (upload video, caption)
+- Tìm kiếm người dùng
+- Trang cá nhân: xem thông tin, video đã đăng
+- Chỉnh sửa hồ sơ cá nhân (avatar, tên, bio)
+- Sidebar gợi ý tài khoản, tài khoản đang theo dõi
+- Responsive UI, tối ưu cho desktop
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Công nghệ sử dụng
+- **Next.js** (App Router, Client Component)
+- **React** 19
+- **Appwrite** (Database, Storage, Auth)
+- **TailwindCSS**
+- **Zustand** (quản lý state)
+- **React Icons**, **Moment.js**
+
+## Cấu trúc thư mục chính
+```
+tiktok-clone-nextjs/
+  app/
+    components/         # Các component giao diện (video, bình luận, overlay...)
+    context/            # Context quản lý user
+    hooks/              # Custom hooks (gọi API, xử lý logic)
+    layouts/            # Layout tổng, sidebar, topnav
+    post/               # Trang chi tiết video
+    profile/            # Trang cá nhân
+    store/              # State management với Zustand
+    types.tsx           # Định nghĩa kiểu dữ liệu
+    upload/             # Trang upload video
+    page.tsx            # Trang chủ (feed video)
+  libs/                 # Cấu hình Appwrite client
+  public/               # Ảnh, video demo, logo
+  README.md
+  package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Hướng dẫn cài đặt & chạy dự án
+1. Cài đặt dependencies:
+   ```bash
+   npm install
+   # hoặc
+   yarn install
+   ```
+2. Tạo file `.env.local` và cấu hình các biến môi trường Appwrite:
+   ```env
+   NEXT_PUBLIC_APPWRITE_ENDPOINT=...
+   NEXT_PUBLIC_APPWRITE_PROJECT_ID=...
+   NEXT_PUBLIC_DATABASE_ID=...
+   NEXT_PUBLIC_COLLECTION_ID_PROFILE=...
+   NEXT_PUBLIC_COLLECTION_ID_POST=...
+   ...
+   ```
+3. Chạy server phát triển:
+   ```bash
+   npm run dev
+   # hoặc
+   yarn dev
+   ```
+4. Truy cập [http://localhost:3000](http://localhost:3000) để sử dụng ứng dụng.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Một số mô tả tính năng
+- **Đăng nhập/Đăng ký:** Overlay popup, chuyển đổi giữa login/register, xác thực qua Appwrite.
+- **Feed video:** Tự động phát/tạm dừng video khi cuộn, like, bình luận trực tiếp.
+- **Upload video:** Chỉ user đăng nhập mới được upload, chọn file video và caption.
+- **Trang cá nhân:** Xem thông tin, video đã đăng, chỉnh sửa hồ sơ (avatar, tên, bio).
+- **Sidebar:** Gợi ý tài khoản, tài khoản đang theo dõi, các liên kết thông tin.
+- **Tìm kiếm:** Tìm kiếm user theo tên trên thanh topnav.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Đóng góp
+Mọi ý kiến đóng góp, pull request đều được hoan nghênh!
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+Dự án dành cho mục đích học tập, phi thương mại.
